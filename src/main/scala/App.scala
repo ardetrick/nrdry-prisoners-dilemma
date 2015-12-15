@@ -3,6 +3,9 @@ import com.typesafe.config.{Config, ConfigFactory}
 
 object App {
 
+  private val confess = "confess"
+  private val silent = "silent"
+
   /**
     * This is a simple factory method for building the configured prisoner strategy. If the application is mis-configured, it will throw an
     * Exception.
@@ -24,9 +27,9 @@ object App {
       println("usage: java -jar prisoners-dilemma.jar <partnerName> <partnerDiscipline> [partnerPreviousResponse] [playerPreviousResponse]")
       System.exit(1)
     } else {
-      def optionalArg(index: Int): Option[Boolean] = if (args.length > index) Some(args(index).toBoolean) else None
+      def optionalArg(index: Int): Option[Boolean] = if (args.length > index) Some(args(index) == confess) else None
       println {
-        if (buildPrisoner.doesConfess(Interrogation(args(0), args(1), optionalArg(2), optionalArg(3)))) "confess" else "silent"
+        if (buildPrisoner.doesConfess(Interrogation(args(0), args(1), optionalArg(2), optionalArg(3)))) confess else silent
       }
     }
   }
