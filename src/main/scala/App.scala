@@ -3,6 +3,12 @@ import com.typesafe.config.{Config, ConfigFactory}
 
 object App {
 
+  /**
+    * This is a simple factory method for building the configured prisoner strategy. If the application is mis-configured, it will throw an
+    * Exception.
+    *
+    * @return A new prisoner, matching the configuration of the application
+    */
   private def buildPrisoner: Prisoner = {
     val config: Config = ConfigFactory.load
     config.getString("prisoner.strategy") match {
