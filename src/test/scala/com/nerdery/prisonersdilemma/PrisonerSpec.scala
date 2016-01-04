@@ -59,4 +59,21 @@ class PrisonerSpec extends FreeSpec with Matchers {
       confessionValidation(confessionCheck, Interrogation("jdoe", "jvm", Some(true), Some(false)))
     }
   }
+
+  "A JVM Sacrificial Lamb Prisoner" - {
+    val prisoner = new JvmSacrificialLambPrisoner
+    def silentCheck(interrogation: Interrogation) = prisoner.doesConfess(interrogation) should be(false)
+    def silentValidation(check: Interrogation => Unit, interrogation: Interrogation) = "remain silent" in { check(interrogation) }
+    def confessionCheck(interrogation: Interrogation) = prisoner.doesConfess(interrogation) should be(true)
+    def confessionValidation(check: Interrogation => Unit, interrogation: Interrogation) = "confess" in { check(interrogation) }
+
+    "not from jvm" - {
+      confessionValidation(confessionCheck, Interrogation("jdoe", "php", None, None))
+    }
+
+    "from jvm" - {
+      silentValidation(silentCheck, Interrogation("jdoe", "jvm", None, None))
+    }
+  }
+
 }

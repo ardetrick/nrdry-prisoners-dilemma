@@ -1,4 +1,4 @@
-import com.nerdery.prisonersdilemma.{RatPrisoner, SilentPrisoner, Interrogation, Prisoner}
+import com.nerdery.prisonersdilemma._
 import com.typesafe.config.{Config, ConfigFactory}
 
 object App {
@@ -17,6 +17,7 @@ object App {
     config.getString("prisoner.strategy") match {
       case "silent" => new SilentPrisoner
       case "rat" => new RatPrisoner
+      case "lamb" => new JvmSacrificialLambPrisoner
       // Add new prisoner strategies here.
       case strategy: Any => throw new Exception(s"Invalid or missing value for 'prisoner.strategy' in prisoners-dilemma.conf: $strategy")
     }
